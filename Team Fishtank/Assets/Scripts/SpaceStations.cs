@@ -6,7 +6,7 @@ public class SpaceStations : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		GetComponentInChildren<AudioSource> ().spatialBlend = 1f;
 	}
 	
 	// Update is called once per frame

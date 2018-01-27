@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MissileLauncher : MonoBehaviour {
 
@@ -25,9 +26,28 @@ public class MissileLauncher : MonoBehaviour {
 	public float speed;
 	[SerializeField]
 	Rigidbody missile;
+	[SerializeField]
+	public Slider normalSlider;
+
+	[SerializeField]
+	public Slider overHeatSlider;
+
+	AudioSource missileSource;
+	[SerializeField]
+	AudioClip missileClip;
+
+	void Awake(){
+
+		missileSource = gameObject.AddComponent<AudioSource> ();
+		missileSource.maxDistance = 20;
+
+
+	}
 	// Use this for initialization
 	void Start () {
-		
+		missileSource.clip = missileClip;
+		normalSlider.maxValue = 100;
+		overHeatSlider.maxValue = 20;
 	}
 
 
@@ -38,6 +58,7 @@ public class MissileLauncher : MonoBehaviour {
 			Rigidbody mis = Instantiate (missile, transform.position, transform.rotation) as Rigidbody;
 
 			mis.velocity = transform.TransformDirection (new Vector3 (0, 0, -speed));
+			missileSource.PlayOneShot (missileClip);
 		}
 	}
 
@@ -57,16 +78,23 @@ public class MissileLauncher : MonoBehaviour {
 		if (heatBar > 0) {
 
 			canShoot = true;
+
+			normalSlider.value = heatBar;
+
+			overHeatSlider.value = 0;
+
 		}
 		if (heatBar > 0 && startTime + cooldownPeriod < Time.time) {
 
 			heatBar = heatBar - (cooldownPercentage);
 
 			startTime = Time.time;
+
 		}
 		if (heatBar > 95f) {
-
+			
 			canShoot = false;
+
 		}
 	}
 

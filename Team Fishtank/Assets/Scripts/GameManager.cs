@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
 
 	[SerializeField]
 	public GameObject rayObj;
+	[SerializeField]
+	public AudioClip planetClip;
 	// Use this for initialization
 	void Start () {
 
@@ -41,8 +43,8 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public void changeScene(){
-
+	public void changeScene(string name){
+		Application.LoadLevel (name);
 
 	}
 

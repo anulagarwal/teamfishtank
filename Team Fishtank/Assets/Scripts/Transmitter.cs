@@ -8,19 +8,42 @@ public class Transmitter : MonoBehaviour {
 
 	[SerializeField]
 	List<Planets> planetsInRange;
+
+	[SerializeField]
+	AudioClip transmitterSound;
+
+	[SerializeField]
+	float startAngle;
+
+	private float startTime;
+	public float duration;
+	private bool isEmit;
 	// Use this for initialization
 	void Start () {
-		
+
+		startAngle = -Mathf.FloorToInt((12-1)/2)*30;
+
+		duration = 7f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	//	emitTransmission ();
+		if (startTime + duration < Time.time && isEmit) {
+
+			GetComponentInChildren<ParticleSystem> (true).gameObject.SetActive( false);
+
+
+
+			isEmit = false;
+		}
 	}
 
 	public void emitTransmission(){
-
-			GetComponent<Player> ().hasReceivedTransmission = false;
+		GetComponentInChildren<ParticleSystem> (true).gameObject.SetActive( true);
+		startTime = Time.time;
+		isEmit = true;
+		GetComponent<Player> ().hasReceivedTransmission = false;
 			RaycastHit hit;
 
 			Collider[] col = Physics.OverlapSphere (transform.position, radius);
@@ -34,6 +57,12 @@ public class Transmitter : MonoBehaviour {
 
 				i++;
 			}
+
+		if (planetsInRange.Count > 0) {
+			GetComponent<AudioSource> ().PlayOneShot (transmitterSound);
+
+
+		}
 			foreach (Planets pla in planetsInRange) {
 			GameObject tempO = GetComponent<Player> ().gm.rayObj;
 			GameObject go = Instantiate (tempO, transform.position, tempO.transform.rotation);

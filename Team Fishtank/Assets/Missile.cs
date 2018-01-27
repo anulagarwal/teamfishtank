@@ -24,5 +24,12 @@ public class Missile : MonoBehaviour {
 			Destroy (gameObject);
 
 		}
+		if (col.gameObject.layer == 11 ) {
+
+			col.gameObject.GetComponent<Health> ().takeDamage (3);
+			Destroy (gameObject);
+
+		}
+
 	}
 }

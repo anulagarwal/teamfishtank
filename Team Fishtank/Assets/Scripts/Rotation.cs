@@ -6,7 +6,11 @@ public class Rotation : MonoBehaviour {
 	[SerializeField]
 	public float multiplier;
 
+	[SerializeField]
+	Vector3 direction;
 
+	[SerializeField]
+	public bool setDirection;
 	// Use this for initialization
 	void Start () {
 		
@@ -14,8 +18,10 @@ public class Rotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		transform.Rotate (Vector3.up * Time.deltaTime *multiplier, Space.World);
+		if (!setDirection)
+			transform.Rotate (Vector3.up * Time.deltaTime * multiplier, Space.World);
+		else
+			transform.Rotate (direction   * Time.deltaTime * multiplier, Space.World);
 
 
 	}

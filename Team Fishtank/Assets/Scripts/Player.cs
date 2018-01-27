@@ -139,6 +139,10 @@ Shooting,
 
 			checkForQuestForObject (col.gameObject);
 		}
+		if (col.gameObject.layer == 12) {
+			GetComponentInChildren<Gun> ().ammo += 5;
+			Destroy (col.gameObject);
+		}
 
 	}
 	void OnTriggerExit(Collider col){
