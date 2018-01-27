@@ -32,6 +32,14 @@ public class RayObj : MonoBehaviour {
 
 	}
 
+	public void move(Transform target, int layerID){
+		layer = layerID;
+
+		targetPos = target.position;
+		canMove = true;
+
+	}
+
 	void OnTriggerEnter(Collider col){
 
 		if (col.gameObject.layer == layer) {
@@ -44,6 +52,8 @@ public class RayObj : MonoBehaviour {
 
 				col.gameObject.GetComponent<Player> ().receiveTransmissionBack ();
 			}
+
+
 			Destroy (gameObject);
 		}
 

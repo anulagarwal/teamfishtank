@@ -23,9 +23,22 @@ public class Planets : MonoBehaviour {
 
 	[SerializeField]
 	int playerVisits;
+
+
+	AudioSource asO;
 	// Use this for initialization
+
+	void Awake(){
+
+		gm = FindObjectOfType<GameManager> ();
+	
+	}
 	void Start () {
-		
+		asO = GetComponentInChildren<AudioSource>();
+
+	//	asO.clip = gm.planetClip;
+		asO.spatialBlend = 1.0f;
+	
 	}
 	
 	// Update is called once per frame
@@ -46,6 +59,8 @@ public class Planets : MonoBehaviour {
 		GameObject go = Instantiate (tempO, transform.position,tempO.transform.rotation);
 	
 		go.GetComponent<RayObj> ().moveAndDestroy (gm.player.transform, 8);
+
+		print ("receive");
 
 	}
 	void OnTriggerEnter(Collider col){
